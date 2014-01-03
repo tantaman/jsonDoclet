@@ -22,6 +22,8 @@
    "constructors" #(map extract-docs (.constructors %))
    "parameters" #(map extract-docs (.parameters %))
    "typeName" #(.typeName %)
+   "modifiers" #(.modifiers %)
+   "returnType" #(.typeName (.returnType %))
   })
 
 (defn extract-docs [doc-obj]
