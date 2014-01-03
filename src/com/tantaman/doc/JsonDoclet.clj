@@ -18,6 +18,10 @@
    "docString" #(.commentText %)
    "fields" #(map extract-docs (.fields %))
    "interfaces" #(map extract-docs (.interfaces %))
+   "innerClasses" #(map extract-docs (.innerClasses %))
+   "constructors" #(map extract-docs (.constructors %))
+   "parameters" #(map extract-docs (.parameters %))
+   "typeName" #(.typeName %)
   })
 
 (defn extract-docs [doc-obj]
