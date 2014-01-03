@@ -6,7 +6,7 @@
 (def dir "./docs")
 
 (defn write-class [docmap]
-  (spit (str dir "/" (docmap "qualifiedName")) (json/write-str docmap)))
+  (spit (str dir "/" (docmap "qualifiedName") ".json") (json/write-str docmap)))
 
 (declare extract-docs)
 (def doc-keys 
@@ -28,6 +28,9 @@
         (catch Exception e docmap)))
    {} doc-keys))
 
-(defn -start [root]
-  (pmap write-class (map extract-docs (.classes root)))
+(defn start [root]
+  (doall (pmap write-class (map extract-docs (.classes root))))
   true)
+
+(defn -start [root]
+  (start root))
