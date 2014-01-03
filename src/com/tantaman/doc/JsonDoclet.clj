@@ -4,6 +4,7 @@
     :methods [#^{:static true} [start [com.sun.javadoc.RootDoc] boolean]]))
 
 (def dir "./docs")
+(.mkdir (java.io.File. dir))
 
 (defn write-class [docmap]
   (spit (str dir "/" (docmap "qualifiedName") ".json") (json/write-str docmap)))
