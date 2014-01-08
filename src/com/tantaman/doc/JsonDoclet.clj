@@ -4,7 +4,7 @@
     :methods [#^{:static true} [start [com.sun.javadoc.RootDoc] boolean]]))
 
 (def dir "./docs")
-(.mkdir (java.io.File. dir))
+(.mkdirs (java.io.File. dir))
 
 (defn write-class [docmap]
   (spit (str dir "/" (docmap "qualifiedName") ".json") (json/write-str docmap)))
@@ -18,13 +18,17 @@
    "methods" #(map extract-docs (.methods %))
    "docString" #(.commentText %)
    "fields" #(map extract-docs (.fields %))
-   "interfaces" #(map extract-docs (.interfaces %))
+   "interfaces" #(map extract-docs (.interfaceTypes %))
    "innerClasses" #(map extract-docs (.innerClasses %))
    "constructors" #(map extract-docs (.constructors %))
    "parameters" #(map extract-docs (.parameters %))
-   "typeName" #(.typeName %)
+   "typeName" #(.typeName (.type %))
+   "qualifiedTypeName" #(.qualifiedTypeName (.type %))
    "modifiers" #(.modifiers %)
-   "returnType" #(.typeName (.returnType %))
+   "returnType" #(.qualifiedTypeName (.returnType %))
+   "annotationType" #(.qualifiedTypeName (.annotationType %))
+   "elementValues" #(map extract-docs (.elementValues %))
+   "element" #(extract-docs (.element %))
   })
 
 (defn extract-docs [doc-obj]
