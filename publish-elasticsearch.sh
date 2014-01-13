@@ -9,4 +9,6 @@
 # This will grab all docs in path/to/docs and publish them to the docs index with the classes type.
 # the id of each doc will be its fully qualified class name.
 
-find $1 -type f -name *.json -print0 | rev | cut -c6- | rev | tr -d '\n' | xargs -0 -p 10 -i% curl -XPOST $2/% --data @%.json
+cd $1
+
+find . -type f -name '*.json' | cut -c3- | rev | cut -c6- | rev | xargs -d '\n' -P 10 -i% curl -XPUT $2/% --data @%.json
